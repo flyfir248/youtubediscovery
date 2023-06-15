@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Search Results</title>
+</head>
+<body>
+    <h1>Search Results for "{{ area_of_interest }}"</h1>
+    {% for video in videos %}
+    <div>
+        <h2>{{ video['title'] }}</h2>
+        <a href="{{ video['url'] }}"><img src="{{ video['thumbnail'] }}" alt="Thumbnail"></a>
+        <p>Likes: {{ video['likes'] }}</p>
+        <p>Dislikes: {{ video['dislikes'] }}</p>
+        {% if video['transcript'] %}
+            <h4>Transcript:</h4>
+            <p>{{ video['transcript'] }}</p>
+        {% else %}
+            <p>No transcript available.</p>
+        {% endif %}
+    </div>
+    {% endfor %}
+</body>
+</html>
