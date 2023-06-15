@@ -2,6 +2,7 @@
 <html>
 <head>
     <title>Search Results</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
     <h1>Search Results for "{{ area_of_interest }}"</h1>
@@ -10,6 +11,7 @@
         <h2>{{ video['title'] }}</h2>
         <a href="{{ video['url'] }}"><img src="{{ video['thumbnail'] }}" alt="Thumbnail"></a>
         <p>Likes: {{ video['likes'] }}</p>
+        <p>Dislikes: {{ video['dislikes'] }}</p>
         {% if video['transcript'] %}
             <h4>Transcript:</h4>
             <p>{{ video['transcript'] }}</p>

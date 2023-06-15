@@ -34,14 +34,14 @@ def get_latest_videos(area_of_interest):
             video_title = item['snippet']['title']
             video_thumbnail = item['snippet']['thumbnails']['default']['url']
             video_url = f'https://www.youtube.com/watch?v={video_id}'
-            video_stats = get_video_stats(video_id)
+            video_likes, video_dislikes = get_video_likes(video_id)
             video_transcript = get_video_transcript(video_id)
             videos.append({
                 'title': video_title,
                 'thumbnail': video_thumbnail,
                 'url': video_url,
-                'likes': video_stats['likes'],
-                'dislikes': video_stats['dislikes'],
+                'likes': video_likes,
+                'dislikes': video_dislikes,
                 'transcript': video_transcript
             })
 
@@ -50,7 +50,7 @@ def get_latest_videos(area_of_interest):
         print('An error occurred:', e)
         return []
 
-def get_video_stats(video_id):
+def get_video_likes(video_id):
     try:
         response = youtube.videos().list(
             part='statistics',
@@ -58,14 +58,12 @@ def get_video_stats(video_id):
         ).execute()
 
         video = response['items'][0]
-        stats = {
-            'likes': int(video['statistics']['likeCount']),
-            'dislikes': int(video['statistics']['dislikeCount'])
-        }
-        return stats
+        likes = int(video['statistics']['likeCount'])
+        dislikes = int(video['statistics'].get('dislikeCount', 0))
+        return likes, dislikes
     except HttpError as e:
         print('An error occurred:', e)
-        return None
+        return None, None
 
 def get_video_transcript(video_id):
     try:
