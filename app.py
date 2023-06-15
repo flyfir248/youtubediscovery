@@ -6,6 +6,7 @@ app = Flask(__name__)
 
 # Set up the YouTube Data API client
 api_key = ''
+
 youtube = build('youtube', 'v3', developerKey=api_key)
 
 @app.route('/')
